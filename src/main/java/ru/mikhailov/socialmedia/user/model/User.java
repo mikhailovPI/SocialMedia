@@ -8,6 +8,7 @@ import lombok.experimental.FieldDefaults;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -21,7 +22,11 @@ public class User {
     public static final String SCHEMA_TABLE = "public";
     public static final String TABLE_USERS = "users";
     public static final String TABLE_USERS_ROLES = "users_roles";
-    public static final String TABLE_USERS_FRIENDS = "users_friends";
+    public static final String TABLE_USERS_FRIENDS = "friends";
+    public static final String TABLE_MESSAGE_SENDER = "sender";
+    public static final String TABLE_MESSAGE_RECEIVER = "receiver";
+    public static final String TABLE_REQUEST_SENDER = "sender";
+    public static final String TABLE_REQUEST_RECEIVER = "receiver";
     public static final String USERS_ID = "user_id";
     public static final String USERS_NAME = "user_name";
     public static final String USERS_PASSWORD = "user_password";
@@ -49,10 +54,21 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = ROLE_ID))
     Set<Role> userRole = new HashSet<>();
 
-    //@Column(name = FRIENDS)
     @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name = TABLE_USERS_FRIENDS,
             joinColumns = @JoinColumn(name = USERS_ID),
             inverseJoinColumns = @JoinColumn(name = USERS_ID))
     Set<User> friends = new HashSet<>();
+
+    @OneToMany(mappedBy = TABLE_REQUEST_SENDER)
+    private List<FriendRequest> sentRequests;
+
+    @OneToMany(mappedBy = TABLE_REQUEST_RECEIVER)
+    private List<FriendRequest> receivedRequests;
+
+    @OneToMany(mappedBy = TABLE_MESSAGE_SENDER)
+    private List<Message> sentMessages;
+
+    @OneToMany(mappedBy = TABLE_MESSAGE_RECEIVER)
+    private List<Message> receivedMessages;
 }
