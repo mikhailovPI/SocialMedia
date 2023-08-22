@@ -1,19 +1,17 @@
 package ru.mikhailov.socialmedia.user.model;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.proxy.HibernateProxy;
 
 import javax.persistence.*;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
 @Table(name = User.TABLE_USERS, schema = User.SCHEMA_TABLE)
@@ -23,6 +21,7 @@ public class User {
     public static final String TABLE_USERS = "users";
     public static final String TABLE_USERS_ROLES = "users_roles";
     public static final String TABLE_USERS_FRIENDS = "friends";
+    public static final String TABLE_USERS_SUBSCRIBER = "subscribers";
     public static final String TABLE_MESSAGE_SENDER = "sender";
     public static final String TABLE_MESSAGE_RECEIVER = "receiver";
     public static final String TABLE_REQUEST_SENDER = "sender";
@@ -32,7 +31,6 @@ public class User {
     public static final String USERS_PASSWORD = "user_password";
     public static final String USERS_EMAIL = "email";
     public static final String ROLE_ID = "role_id";
-    public static final String FRIENDS = "friends";
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,23 +50,51 @@ public class User {
     @JoinTable(name = TABLE_USERS_ROLES,
             joinColumns = @JoinColumn(name = USERS_ID),
             inverseJoinColumns = @JoinColumn(name = ROLE_ID))
-    Set<Role> userRole = new HashSet<>();
+    Set<Role> userRole;
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JoinTable(name = TABLE_USERS_FRIENDS,
-            joinColumns = @JoinColumn(name = USERS_ID),
-            inverseJoinColumns = @JoinColumn(name = USERS_ID))
-    Set<User> friends = new HashSet<>();
+    @ManyToMany
+    Set<User> friends;
+
+    @ManyToMany
+    Set<User> subscribers; //подписчики
 
     @OneToMany(mappedBy = TABLE_REQUEST_SENDER)
-    private List<FriendRequest> sentRequests;
+    @ToString.Exclude
+    List<FriendRequest> sentRequests; //отправленные запросы в друзья
 
     @OneToMany(mappedBy = TABLE_REQUEST_RECEIVER)
-    private List<FriendRequest> receivedRequests;
+    @ToString.Exclude
+    List<FriendRequest> receivedRequests; //полученные запросы на добавление в друзья
 
     @OneToMany(mappedBy = TABLE_MESSAGE_SENDER)
-    private List<Message> sentMessages;
+    @ToString.Exclude
+    List<Message> sentMessages;
 
     @OneToMany(mappedBy = TABLE_MESSAGE_RECEIVER)
-    private List<Message> receivedMessages;
+    @ToString.Exclude
+    List<Message> receivedMessages;
+
+    @Override
+    public final boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null) return false;
+        Class<?> oEffectiveClass = o instanceof HibernateProxy ? ((HibernateProxy) o)
+                .getHibernateLazyInitializer()
+                .getPersistentClass() : o.getClass();
+        Class<?> thisEffectiveClass = this instanceof HibernateProxy ? ((HibernateProxy) this)
+                .getHibernateLazyInitializer()
+                .getPersistentClass() : this.getClass();
+        if (thisEffectiveClass != oEffectiveClass) return false;
+        User user = (User) o;
+        return getId() != null && Objects.equals(getId(), user.getId());
+    }
+
+    @Override
+    public final int hashCode() {
+        return this instanceof HibernateProxy ? ((HibernateProxy) this)
+                .getHibernateLazyInitializer()
+                .getPersistentClass()
+                .hashCode() : getClass()
+                .hashCode();
+    }
 }

@@ -26,11 +26,11 @@ CREATE TABLE IF NOT EXISTS message
     CONSTRAINT message_user_2 FOREIGN KEY (receiver_id) REFERENCES USERS ON DELETE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS user_subscriber
+CREATE TABLE IF NOT EXISTS subscribers
 (
     sender_id     BIGINT NOT NULL, --пользователь
     subscriber_id BIGINT NOT NULL, --подписчик
-    CONSTRAINT friendship PRIMARY KEY (sender_id, subscriber_id),
+    CONSTRAINT subscriber PRIMARY KEY (sender_id, subscriber_id),
     CONSTRAINT message_user_1 FOREIGN KEY (sender_id) REFERENCES USERS ON DELETE CASCADE,
     CONSTRAINT message_user_2 FOREIGN KEY (subscriber_id) REFERENCES USERS ON DELETE CASCADE
 );

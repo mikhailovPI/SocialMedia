@@ -13,7 +13,8 @@ import ru.mikhailov.socialmedia.user.service.UserService;
 public class UserController {
         public static final String URL_USER_R = "/registration/user";
         public static final String URL_USER = "/user";
-        public final UserService userService;
+
+        private final UserService userService;
 
         @PostMapping(path = URL_USER_R)
         public UserDto createUser(@RequestBody UserDto userDto) {

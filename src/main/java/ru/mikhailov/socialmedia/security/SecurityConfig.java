@@ -1,3 +1,4 @@
+/*
 package ru.mikhailov.socialmedia.security;
 
 import lombok.RequiredArgsConstructor;
@@ -42,3 +43,4 @@ public class SecurityConfig implements WebSecurityConfigurer {
         return authenticationProvider;
     }
 }
+*/

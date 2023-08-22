@@ -1,3 +1,4 @@
+/*
 package ru.mikhailov.socialmedia.security;
 
 import lombok.AllArgsConstructor;
@@ -69,3 +70,4 @@ public class UserDetailsImp implements UserDetails {
                 .collect(Collectors.toList());
     }
 }
+*/

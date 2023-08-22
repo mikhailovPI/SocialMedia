@@ -3,6 +3,7 @@ package ru.mikhailov.socialmedia.user.mapper;
 import ru.mikhailov.socialmedia.user.dto.UserDto;
 import ru.mikhailov.socialmedia.user.model.User;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 
 public class UserMapper {
@@ -24,7 +25,12 @@ public class UserMapper {
                 userDto.getPassword(),
                 userDto.getEmail(),
                 userDto.getUserRole(),
-                new HashSet<>()
+                new HashSet<>(),
+                new HashSet<>(),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>(),
+                new ArrayList<>()
         );
     }
 }
