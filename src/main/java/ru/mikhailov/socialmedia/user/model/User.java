@@ -5,9 +5,7 @@ import lombok.experimental.FieldDefaults;
 import org.hibernate.proxy.HibernateProxy;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Data
 @AllArgsConstructor
@@ -50,29 +48,25 @@ public class User {
     @JoinTable(name = TABLE_USERS_ROLES,
             joinColumns = @JoinColumn(name = USERS_ID),
             inverseJoinColumns = @JoinColumn(name = ROLE_ID))
-    Set<Role> userRole;
+    Set<Role> userRole = new HashSet<>();
 
     @ManyToMany
-    Set<User> friends;
+    Set<User> friends = new HashSet<>();
 
     @ManyToMany
-    Set<User> subscribers; //подписчики
+    Set<User> subscribers = new HashSet<>(); //подписчики
 
     @OneToMany(mappedBy = TABLE_REQUEST_SENDER)
-    @ToString.Exclude
-    List<FriendRequest> sentRequests; //отправленные запросы в друзья
+    List<FriendRequest> sentRequests = new ArrayList<>(); //отправленные запросы в друзья
 
     @OneToMany(mappedBy = TABLE_REQUEST_RECEIVER)
-    @ToString.Exclude
-    List<FriendRequest> receivedRequests; //полученные запросы на добавление в друзья
+    List<FriendRequest> receivedRequests = new ArrayList<>(); //полученные запросы на добавление в друзья
 
     @OneToMany(mappedBy = TABLE_MESSAGE_SENDER)
-    @ToString.Exclude
-    List<Message> sentMessages;
+    List<Message> sentMessages = new ArrayList<>();
 
     @OneToMany(mappedBy = TABLE_MESSAGE_RECEIVER)
-    @ToString.Exclude
-    List<Message> receivedMessages;
+    List<Message> receivedMessages = new ArrayList<>();
 
     @Override
     public final boolean equals(Object o) {

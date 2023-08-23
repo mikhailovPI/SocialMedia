@@ -27,7 +27,8 @@ public class UserController {
         public void addFriends(
                 @PathVariable Long userId,
                 @PathVariable Long friendId) {
-                log.info("URL: /users. PutMapping/Создание пользователя/createUser");
+                log.info("URL: /users/{userId}/friends/{friendId}." +
+                        " PutMapping/Добавление в друзья/addFriends");
                 userService.addFriends(userId, friendId);
         }
 
@@ -35,6 +36,8 @@ public class UserController {
         public void deleteFriends(
                 @PathVariable Long userId,
                 @PathVariable Long friendId) {
+                log.info("URL: /users/{userId}/friends/{friendId}." +
+                        " DeleteMapping/Удаление из друзей/deleteFriends");
                 userService.deleteFriends(userId, friendId);
         }
 }
