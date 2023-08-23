@@ -1,4 +1,3 @@
-/*
 package ru.mikhailov.socialmedia.security;
 
 import lombok.RequiredArgsConstructor;
@@ -24,4 +23,4 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException(
                         String.format("Пользователь с email:  %s не существует.", email))));
     }
-}*/
+}
