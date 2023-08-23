@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @Data
 @AllArgsConstructor
 public class UserDetailsImp implements UserDetails {
-
     private final String username;
     private final String password;
     private final List<SimpleGrantedAuthority> authorities;

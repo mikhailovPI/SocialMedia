@@ -29,7 +29,6 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-
     @Override
     @Transactional
     public UserDto createUser(UserDto userDto) {
@@ -58,11 +57,11 @@ public class UserServiceImpl implements UserService {
             user.setUserRole(roles);
             user.setPassword(passwordEncoder.encode(userDto.getPassword()));
             user = userRepository.save(user);
+            return toUserDto(user);
         } else {
             throw new ConflictingRequestException(
                     String.format("Пользователь с email:  %s - уже существует!", userDto.getEmail()));
         }
-        return toUserDto(user);
     }
 
     @Override

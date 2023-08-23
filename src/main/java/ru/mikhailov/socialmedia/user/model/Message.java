@@ -1,6 +1,5 @@
 package ru.mikhailov.socialmedia.user.model;
 
-
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,8 +19,8 @@ public class Message {
     public static final String SCHEMA_TABLE = "public";
     public static final String TABLE_USERS = "message";
     public static final String MESSAGE_ID = "message_id";
-    public static final String SENDER = "sender_id";
-    public static final String RECEIVER = "receiver_id";
+    public static final String SENDERS = "sender_id";
+    public static final String RECEIVERS = "receiver_id";
     public static final String MESSAGE_TEXT = "text";
 
     @Id
@@ -38,5 +37,3 @@ public class Message {
     @Column(name = MESSAGE_TEXT)
     String content;
 }
-
-

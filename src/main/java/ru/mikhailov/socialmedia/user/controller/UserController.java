@@ -7,7 +7,6 @@ import ru.mikhailov.socialmedia.user.dto.UserDto;
 import ru.mikhailov.socialmedia.user.service.UserService;
 
 @RestController
-@RequestMapping(path = UserController.URL_USER)
 @RequiredArgsConstructor
 @Slf4j
 public class UserController {
